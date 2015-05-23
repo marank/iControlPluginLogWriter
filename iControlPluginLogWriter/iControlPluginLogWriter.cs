@@ -25,6 +25,10 @@ namespace iControlPluginLogWriter {
             }
         }
 
+        public bool Init() {
+            return true;
+        }
+
         public void Handle(string[] commands, string ip) {
             string path = AppDomain.CurrentDomain.BaseDirectory + "\\commandlog.txt";
             string text = String.Format("[{0:s}] [{1,15}] >> {2}", System.DateTime.Now, ip, String.Join(" ", commands)) + Environment.NewLine;
