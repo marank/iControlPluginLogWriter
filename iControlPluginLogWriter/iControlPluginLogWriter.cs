@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using iControlPluginInterface;
+using iControlInterfaces;
 
 namespace iControlPluginLogWriter {
-    class iControlPlugin : IiControlPlugin {
+    public class iControlPlugin : IiControlPlugin {
         public string Name {
             get {
                 return "LogWriter";
@@ -16,8 +16,8 @@ namespace iControlPluginLogWriter {
             }
         }
 
-        private iControlPluginInterface.IiControlPluginHost pluginHost;
-        public iControlPluginInterface.IiControlPluginHost Host {
+        private IiControlPluginHost pluginHost;
+        public IiControlPluginHost Host {
             set {
                 pluginHost = value;
             }
@@ -39,9 +39,9 @@ namespace iControlPluginLogWriter {
             return true;
         }
 
-        public void Handle(string[] commands, string ip) {
+        public void Handle(string[] commands, IiControlClient client) {
             string path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "commandlog.txt");
-            string text = String.Format("[{0:s}] [{1,15}] >> {2}", System.DateTime.Now, ip, String.Join(" ", commands)) + Environment.NewLine;
+            string text = String.Format("[{0:s}] [{1,15}] >> {2}", System.DateTime.Now, client.IPAddress, String.Join(" ", commands)) + Environment.NewLine;
 
             System.IO.File.AppendAllText(path, text);
         }
