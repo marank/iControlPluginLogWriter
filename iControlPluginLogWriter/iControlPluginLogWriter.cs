@@ -27,7 +27,7 @@ namespace iControlPluginLogWriter {
         }
 
         public bool Init() {
-            string configFile = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "plugins", "iControlPluginPowerManagement.config");
+            string configFile = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "plugins", "iControlPluginLogWriter.config");
             if (System.IO.File.Exists(configFile)) {
                 Dictionary<string, string> settings = pluginHost.DeserializeJSON(configFile);
                 bool value;
