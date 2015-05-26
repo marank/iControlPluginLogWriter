@@ -16,23 +16,29 @@ namespace iControlPluginLogWriter {
             }
         }
 
-        private IiControlPluginHost pluginHost;
-        public IiControlPluginHost Host {
-            set {
-                pluginHost = value;
-            }
+        public string Version {
             get {
-                return pluginHost;
+                return "0.0.1";
             }
         }
 
+        private IiControlPluginHost _pluginHost;
+        public IiControlPluginHost Host {
+            set {
+                _pluginHost = value;
+            }
+            get {
+                return _pluginHost;
+            }
+        }
+
+        private string _configpath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "plugins", "iControlPluginLogWriter.config");
+        private Dictionary<string, object> _settings;
+
         public bool Init() {
-            string configFile = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "plugins", "iControlPluginLogWriter.config");
-            if (System.IO.File.Exists(configFile)) {
-                Dictionary<string, string> settings = pluginHost.DeserializeJSON(configFile);
-                bool value;
-                if (settings.ContainsKey("enabled") && Boolean.TryParse(settings["enabled"], out value) && value == false) {
-                    pluginHost.Log("Plugin disabled", this);
+            if (System.IO.File.Exists(_configpath)) {
+                _settings = Host.DeserializeJSON(_configpath);
+                if (_settings.ContainsKey("enabled") && Convert.ToBoolean(_settings["enabled"]) == false) {
                     return false;
                 }
             }
