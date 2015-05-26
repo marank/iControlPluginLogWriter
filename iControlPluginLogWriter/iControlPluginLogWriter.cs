@@ -12,7 +12,7 @@ namespace iControlPluginLogWriter {
 
         public string Author {
             get {
-                return "Matthias Rank";
+                return "marank <development@m-rank.de>";
             }
         }
 
