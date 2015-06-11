@@ -32,10 +32,12 @@ namespace iControlPluginLogWriter {
             }
         }
 
-        private string _configpath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "plugins", "iControlPluginLogWriter.config");
+        private string _configpath;
         private Dictionary<string, object> _settings;
 
         public bool Init() {
+            _configpath = System.IO.Path.Combine(Host.PluginDir, "iControlPluginLogWriter.config");
+
             if (System.IO.File.Exists(_configpath)) {
                 _settings = Host.DeserializeJSON(_configpath);
                 if (_settings.ContainsKey("enabled") && Convert.ToBoolean(_settings["enabled"]) == false) {
